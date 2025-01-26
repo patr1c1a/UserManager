@@ -7,7 +7,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=UserManager.db"));
 
 builder.Services.AddEndpointsApiExplorer(); 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+    c.EnableAnnotations());
 
 builder.Services.AddControllers();
 
