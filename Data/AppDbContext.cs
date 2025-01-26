@@ -10,5 +10,28 @@ namespace UserManager.Data
     	// Tables:
     	public DbSet<User> Users { get; set; }
     	public DbSet<Role> Roles { get; set; }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(u => u.RoleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Username)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.PasswordHash)
+                .IsRequired();
+
+			modelBuilder.Entity<Role>()
+                .Property(r => r.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+        }
 	}
 }
