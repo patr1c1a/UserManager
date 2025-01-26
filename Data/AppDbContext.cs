@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using UserManager.Models;
 
 namespace UserManager.Data
 {
