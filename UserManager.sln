@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManager", "UserManager.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManager", "UserManager\UserManager.csproj", "{C326D23B-8BFC-45F8-AC66-0E7D19C790CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManager.Tests", "UserManager.Tests\UserManager.Tests.csproj", "{26BF5021-9754-4A5C-8B58-C355377CB838}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{C326D23B-8BFC-45F8-AC66-0E7D19C790CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C326D23B-8BFC-45F8-AC66-0E7D19C790CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C326D23B-8BFC-45F8-AC66-0E7D19C790CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26BF5021-9754-4A5C-8B58-C355377CB838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26BF5021-9754-4A5C-8B58-C355377CB838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26BF5021-9754-4A5C-8B58-C355377CB838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26BF5021-9754-4A5C-8B58-C355377CB838}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
