@@ -5,10 +5,10 @@ namespace UserManager.Data
 {
     public interface IRoleRepository
     {
-        List<User> GetAllRoles();
-        User GetRoleById(int id);
-        void AddRole(User user);
-        void UpdateRole(User user);
+        List<Role> GetAllRoles();
+        Role GetRoleById(int id);
+        void AddRole(Role role);
+        void UpdateRole(Role role);
         void DeleteRole(int id);
     }
 }
