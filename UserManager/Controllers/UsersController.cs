@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Data;
 using UserManager.Models;
+using System.Collections.Generic;
 
 namespace UserManager.Controllers
 {
@@ -8,24 +9,24 @@ namespace UserManager.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(AppDbContext context)
+        public UsersController(IUserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
         public IActionResult GetUsers()
         {
-            var users = _context.Users.ToList();
+            var users = _userRepository.GetAllUsers();
             return Ok(users);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
         {
-            var user = _context.Users.Find(id);
+            var user = _userRepository.GetUserById(id);
 
             if (user == null)
             {
@@ -43,8 +44,7 @@ namespace UserManager.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
+            _userRepository.AddUser(newUser);
 
             return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
         }
@@ -52,7 +52,7 @@ namespace UserManager.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateUser(int id, [FromBody] User updatedUser)
         {
-            var user = _context.Users.Find(id);
+            var user = _userRepository.GetUserById(id);
 
             if (user == null)
             {
@@ -63,7 +63,7 @@ namespace UserManager.Controllers
             user.PasswordHash = updatedUser.PasswordHash;
             user.RoleId = updatedUser.RoleId;
 
-            _context.SaveChanges();
+            _userRepository.UpdateUser(user);
 
             return NoContent();
         }
@@ -71,15 +71,14 @@ namespace UserManager.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
-            var user = _context.Users.Find(id);
+            var user = _userRepository.GetUserById(id);
 
             if (user == null)
             {
                 return NotFound(new { Message = "User not found." });
             }
 
-            _context.Users.Remove(user);
-            _context.SaveChanges();
+            _userRepository.DeleteUser(id);
 
             return NoContent();
         }

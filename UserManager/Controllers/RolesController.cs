@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Data;
 using UserManager.Models;
+using System.Collections.Generic;
 
 namespace UserManager.Controllers
 {
@@ -8,24 +9,24 @@ namespace UserManager.Controllers
     [Route("api/[controller]")]
     public class RolesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IRoleRepository _roleRepository;
 
-        public RolesController(AppDbContext context)
+        public RolesController(IRoleRepository roleRepository)
         {
-            _context = context;
+            _roleRepository = roleRepository;
         }
 
         [HttpGet]
         public IActionResult GetRoles()
         {
-            var roles = _context.Roles.ToList();
+            var roles = _roleRepository.GetAllRoles();
             return Ok(roles);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetRole(int id)
         {
-            var role = _context.Roles.Find(id);
+            var role = _roleRepository.GetRoleById(id);
 
             if (role == null)
             {
@@ -43,8 +44,7 @@ namespace UserManager.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Roles.Add(newRole);
-            _context.SaveChanges();
+            _roleRepository.AddRole(newRole);
 
             return CreatedAtAction(nameof(GetRole), new { id = newRole.Id }, newRole);
         }
@@ -52,7 +52,7 @@ namespace UserManager.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateRole(int id, [FromBody] Role updatedRole)
         {
-            var role = _context.Roles.Find(id);
+            var role = _roleRepository.GetRoleById(id);
 
             if (role == null)
             {
@@ -61,7 +61,7 @@ namespace UserManager.Controllers
 
             role.Name = updatedRole.Name;
 
-            _context.SaveChanges();
+            _roleRepository.UpdateRole(updatedRole);
 
             return NoContent();
         }
@@ -69,15 +69,14 @@ namespace UserManager.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteRole(int id)
         {
-            var role = _context.Roles.Find(id);
+            var role = _roleRepository.GetRoleById(id);
 
             if (role == null)
             {
                 return NotFound(new { Message = "Role not found." });
             }
 
-            _context.Roles.Remove(role);
-            _context.SaveChanges();
+            _roleRepository.DeleteRole(id);
 
             return NoContent();
         }
