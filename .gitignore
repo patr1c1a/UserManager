@@ -4,3 +4,7 @@ obj/
 *.sqlite
 .vs/
 .vscode/
+
+# SQLite temporary files
+*.db-shm
+*.db-wal
