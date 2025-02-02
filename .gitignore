@@ -4,6 +4,7 @@ obj/
 *.sqlite
 .vs/
 .vscode/
+**/appsettings.Development.json
 
 # SQLite temporary files
 *.db-shm
