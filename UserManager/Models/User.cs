@@ -26,6 +26,6 @@ namespace UserManager.Models
         public required int RoleId { get; set; }
 
         [SwaggerSchema(Description = "The role associated with the user.")]
-        public required Role Role { get; set; }
+        public Role? Role { get; set; }
     }
 }
