@@ -7,6 +7,7 @@ namespace UserManager.Data
     {
         List<User> GetAllUsers();
         User? GetUserById(int id);
+        User? GetUserByUsername(string name);
         void AddUser(User user);
         void UpdateUser(User user);
         void DeleteUser(int id);

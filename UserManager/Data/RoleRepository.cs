@@ -23,6 +23,11 @@ namespace UserManager.Data
             return _context.Roles.Find(id);
         }
 
+        public Role? GetRoleByName(string name)
+        {
+            return _context.Roles.FirstOrDefault(r => r.Name == name);
+        }
+
         public void AddRole(Role role)
         {
             _context.Roles.Add(role);

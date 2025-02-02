@@ -24,6 +24,11 @@ namespace UserManager.Data
             return _context.Users.Find(id);
         }
 
+        public User? GetUserByUsername(string username)
+        {
+            return _context.Users.FirstOrDefault(u => u.Username == username);
+        }
+
         public void AddUser(User user)
         {
             user.PasswordHash = _passwordHasher.HashPassword(user.PasswordHash);

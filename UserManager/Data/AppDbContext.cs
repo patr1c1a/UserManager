@@ -20,10 +20,6 @@ namespace UserManager.Data
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
-            modelBuilder.Entity<Role>()
-                .HasIndex(r => r.Name)
-                .IsUnique();
-
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
@@ -38,6 +34,10 @@ namespace UserManager.Data
             modelBuilder.Entity<User>()
                 .Property(u => u.PasswordHash)
                 .IsRequired();
+
+            modelBuilder.Entity<Role>()
+                .HasIndex(r => r.Name)
+                .IsUnique();
 
 			modelBuilder.Entity<Role>()
                 .Property(r => r.Name)
