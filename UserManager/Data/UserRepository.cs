@@ -18,7 +18,7 @@ namespace UserManager.Data
             return _context.Users.ToList();
         }
 
-        public User GetUserById(int id)
+        public User? GetUserById(int id)
         {
             return _context.Users.Find(id);
         }

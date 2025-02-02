@@ -18,7 +18,7 @@ namespace UserManager.Data
             return _context.Roles.ToList();
         }
 
-        public Role GetRoleById(int id)
+        public Role? GetRoleById(int id)
         {
             return _context.Roles.Find(id);
         }
