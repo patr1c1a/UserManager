@@ -36,16 +36,24 @@ namespace UserManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] User newUser)
+        public IActionResult CreateUser([FromBody] User userDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _userRepository.AddUser(newUser);
+            var user = new User
+            {
+                Username = userDto.Username,
+                Email = userDto.Email,
+                RoleId = userDto.RoleId,
+                PasswordHash = userDto.PasswordHash
+            };
 
-            return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
+            _userRepository.AddUser(userDto);
+
+            return CreatedAtAction(nameof(GetUser), new { id = userDto.Id }, userDto);
         }
 
         [HttpPut("{id}")]
