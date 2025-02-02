@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Data;
 using UserManager.Models;
-using System.Collections.Generic;
 
 namespace UserManager.Controllers
 {
