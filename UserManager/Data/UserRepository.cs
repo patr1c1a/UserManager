@@ -31,7 +31,7 @@ namespace UserManager.Data
 
         public void AddUser(User user)
         {
-            user.PasswordHash = _passwordHasher.HashPassword(user.PasswordHash);
+            user.Password = _passwordHasher.HashPassword(user.Password);
             _context.Users.Add(user);
             _context.SaveChanges();
         }
@@ -41,7 +41,7 @@ namespace UserManager.Data
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
             if (user == null) return false;
 
-            return _passwordHasher.VerifyPassword(password, user.PasswordHash);
+            return _passwordHasher.VerifyPassword(password, user.Password);
         }
 
         public void UpdateUser(User user)

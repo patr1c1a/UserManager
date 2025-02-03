@@ -20,7 +20,7 @@ namespace UserManager.Tests.Controllers
                 {
                     Id = 1,
                     Username = "TestUser",
-                    PasswordHash = "hashedPass",
+                    Password = "hashedPass",
                     RoleId = 1,
                     Role = new Role 
                     { 
@@ -63,7 +63,7 @@ namespace UserManager.Tests.Controllers
             {
                 Id = 1,
                 Username = "TestUser",
-                PasswordHash = "hashedPass",
+                Password = "hashedPass",
                 RoleId = 1,
                 Role = new Role 
                 {
@@ -91,7 +91,7 @@ namespace UserManager.Tests.Controllers
             {
                 Id = 1,
                 Username = "TestUser",
-                PasswordHash = "hashedPass",
+                Password = "hashedPass",
                 RoleId = 1,
                 Role = new Role 
                 { 
@@ -121,7 +121,7 @@ namespace UserManager.Tests.Controllers
                 Id = 1,
                 Username = "TestUser",
                 Email = "invalid-email",
-                PasswordHash = "hashedPass",
+                Password = "hashedPass",
                 RoleId = 1,
                 Role = new Role 
                 {
@@ -148,7 +148,7 @@ namespace UserManager.Tests.Controllers
             {
                 Id = 1,
                 Username = "TestUser",
-                PasswordHash = "hashedPass",
+                Password = "hashedPass",
                 RoleId = 1,
                 Role = new Role 
                 {
@@ -174,7 +174,7 @@ namespace UserManager.Tests.Controllers
             {
                 Id = 1,
                 Username = "TestUser",
-                PasswordHash = "hashedPass",
+                Password = "hashedPass",
                 RoleId = 1,
                 Role = new Role 
                 {
@@ -187,7 +187,7 @@ namespace UserManager.Tests.Controllers
             {
                 Id = 1,
                 Username = "UpdatedTestUser",
-                PasswordHash = "hashedPass",
+                Password = "hashedPass",
                 RoleId = 1,
                 Role = new Role 
                 {
@@ -214,7 +214,7 @@ namespace UserManager.Tests.Controllers
             {
                 Id = 1,
                 Username = "TestUser",
-                PasswordHash = "hashedPass",
+                Password = "hashedPass",
                 RoleId = 1,
                 Role = new Role 
                 { 

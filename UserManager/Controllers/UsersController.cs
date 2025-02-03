@@ -48,7 +48,7 @@ namespace UserManager.Controllers
                 Username = userDto.Username,
                 Email = userDto.Email,
                 RoleId = userDto.RoleId,
-                PasswordHash = userDto.PasswordHash
+                Password = userDto.Password
             };
 
             _userRepository.AddUser(userDto);
@@ -67,7 +67,7 @@ namespace UserManager.Controllers
             }
 
             user.Username = updatedUser.Username;
-            user.PasswordHash = updatedUser.PasswordHash;
+            user.Password = updatedUser.Password;
             user.RoleId = updatedUser.RoleId;
 
             _userRepository.UpdateUser(user);

@@ -32,7 +32,7 @@ namespace UserManager.Data
                 .HasMaxLength(50);
 
             modelBuilder.Entity<User>()
-                .Property(u => u.PasswordHash)
+                .Property(u => u.Password)
                 .IsRequired();
 
             modelBuilder.Entity<Role>()
