@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using UserManager.Data;
 using UserManager.Models;
 using UserManager.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UserManager.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class RolesController : ControllerBase
