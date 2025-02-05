@@ -1,5 +1,6 @@
 using UserManager.Models;
 using UserManager.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserManager.Data
 {
@@ -16,15 +17,20 @@ namespace UserManager.Data
 
         public List<User> GetAllUsers()
         {
-            return _context.Users.ToList();
+            return _context.Users.Include(u => u.Role).ToList();
         }
 
         public User? GetUserById(int id)
         {
-            return _context.Users.Find(id);
+            return _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Id == id);
         }
 
         public User? GetUserByUsername(string username)
+        {
+            return _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Username == username);
+        }
+
+        public User? GetFullUserByUsername(string username)
         {
             return _context.Users.FirstOrDefault(u => u.Username == username);
         }
@@ -39,7 +45,8 @@ namespace UserManager.Data
         public bool ValidateUser(string username, string password)
         {
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
-            if (user == null) return false;
+            if (user == null) 
+                return false;
 
             return _passwordHasher.VerifyPassword(password, user.Password);
         }
