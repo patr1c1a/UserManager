@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Data;
 using UserManager.Models;
+using UserManager.Models.DTO;
 
 namespace UserManager.Controllers
 {
@@ -18,7 +19,16 @@ namespace UserManager.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            var users = _userRepository.GetAllUsers();
+            var users = _userRepository.GetAllUsers()
+            .Select(u => new UserDTO
+            {
+                Id = u.Id,
+                Username = u.Username,
+                Email = u.Email ?? "",
+                RoleId = u.RoleId,
+                RoleName = u.Role?.Name ?? "Unknown"
+            }).ToList();
+
             return Ok(users);
         }
 
@@ -32,11 +42,20 @@ namespace UserManager.Controllers
                 return NotFound(new { Message = "User not found." });
             }
 
-            return Ok(user);
+            var userDto = new UserDTO
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email ?? "",
+                RoleId = user.RoleId,
+                RoleName = user.Role?.Name ?? "Unknown"
+            };
+
+            return Ok(userDto);
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] User userDto)
+        public IActionResult CreateUser([FromBody] User newUser)
         {
             if (!ModelState.IsValid)
             {
@@ -45,15 +64,15 @@ namespace UserManager.Controllers
 
             var user = new User
             {
-                Username = userDto.Username,
-                Email = userDto.Email,
-                RoleId = userDto.RoleId,
-                Password = userDto.Password
+                Username = newUser.Username,
+                Email = newUser.Email,
+                RoleId = newUser.RoleId,
+                Password = newUser.Password
             };
 
-            _userRepository.AddUser(userDto);
+            _userRepository.AddUser(user);
 
-            return CreatedAtAction(nameof(GetUser), new { id = userDto.Id }, userDto);
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, newUser);
         }
 
         [HttpPut("{id}")]

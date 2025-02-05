@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Data;
 using UserManager.Models;
+using UserManager.Models.DTO;
 
 namespace UserManager.Controllers
 {
@@ -18,7 +19,13 @@ namespace UserManager.Controllers
         [HttpGet]
         public IActionResult GetRoles()
         {
-            var roles = _roleRepository.GetAllRoles();
+            var roles = _roleRepository.GetAllRoles().
+            Select(r => new RoleDTO
+            {
+                Id = r.Id,
+                Name = r.Name
+            }).ToList();
+
             return Ok(roles);
         }
 
@@ -32,7 +39,13 @@ namespace UserManager.Controllers
                 return NotFound(new { Message = "Role not found." });
             }
 
-            return Ok(role);
+            var roleDto = new RoleDTO
+            {
+                Id = role.Id,
+                Name = role.Name
+            };
+
+            return Ok(roleDto);
         }
 
         [HttpPost]
