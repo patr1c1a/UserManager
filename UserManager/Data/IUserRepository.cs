@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UserManager.Models;
 
 namespace UserManager.Data
@@ -7,7 +6,7 @@ namespace UserManager.Data
     {
         List<User> GetAllUsers();
         User? GetUserById(int id);
-        User? GetUserByUsername(string name);
+        User? GetUserByUsername(string username);
         void AddUser(User user);
         bool ValidateUser(string username, string password);
         void UpdateUser(User user);
