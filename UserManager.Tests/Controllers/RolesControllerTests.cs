@@ -3,6 +3,7 @@ using UserManager.Data;
 using UserManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using UserManager.Models.DTO;
 
 namespace UserManager.Tests.Controllers
 {
@@ -28,10 +29,11 @@ namespace UserManager.Tests.Controllers
             var result = controller.GetRoles() as OkObjectResult;
             Assert.That(result, Is.Not.Null, "Expected an OkObjectResult, but got null.");
 
-            var Roles = result.Value as List<Role>;
-            Assert.That(Roles, Is.Not.Null, "Expected a list of Roles, but got null.");
-            Assert.That(Roles.Count, Is.EqualTo(1));
-            Assert.That(Roles.FirstOrDefault(), Is.EqualTo(storedRoles.FirstOrDefault()));
+            var returnedRoles = result.Value as List<RoleDTO>;
+            Assert.That(returnedRoles, Is.Not.Null, "Expected a List<RoleDTO>, but got null.");
+            Assert.That(returnedRoles.Count, Is.EqualTo(1));
+            Assert.That(returnedRoles.FirstOrDefault().Id, Is.EqualTo(storedRoles.FirstOrDefault().Id));
+            Assert.That(returnedRoles.FirstOrDefault().Name, Is.EqualTo(storedRoles.FirstOrDefault().Name));
         }
 
         [Test]
@@ -62,10 +64,12 @@ namespace UserManager.Tests.Controllers
 
             var result = controller.GetRole(1) as OkObjectResult;
             Assert.That(result, Is.Not.Null, "Expected an OkObjectResult, but got null.");
-
-            var returnedRole = result.Value as Role;
             Assert.That(result.StatusCode, Is.EqualTo(200));
-            Assert.That(returnedRole, Is.EqualTo(storedRole));
+
+            var returnedRole = result.Value as RoleDTO;
+            Assert.That(returnedRole, Is.Not.Null, "Expected a RoleDTO, but got null.");
+            Assert.That(returnedRole.Id, Is.EqualTo(storedRole.Id));
+            Assert.That(returnedRole.Name, Is.EqualTo(storedRole.Name));
         }
 
         [Test]
