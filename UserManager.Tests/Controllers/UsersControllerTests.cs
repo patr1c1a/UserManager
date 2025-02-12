@@ -3,6 +3,7 @@ using UserManager.Data;
 using UserManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using UserManager.Models.DTO;
 
 namespace UserManager.Tests.Controllers
 {
@@ -35,10 +36,10 @@ namespace UserManager.Tests.Controllers
             var result = controller.GetUsers() as OkObjectResult;
             Assert.That(result, Is.Not.Null, "Expected an OkObjectResult, but got null.");
 
-            var users = result.Value as List<User>;
-            Assert.That(users, Is.Not.Null, "Expected a list of users, but got null.");
-            Assert.That(users.Count, Is.EqualTo(1));
-            Assert.That(users.FirstOrDefault(), Is.EqualTo(storedUsers.FirstOrDefault()));
+            var returnedUsers = result.Value as List<UserDTO>;
+            Assert.That(returnedUsers, Is.Not.Null, "Expected a List<UserDTO>, but got null.");
+            Assert.That(returnedUsers.Count, Is.EqualTo(1));
+            Assert.That(returnedUsers.FirstOrDefault().Id, Is.EqualTo(storedUsers.FirstOrDefault().Id));
         }
 
         [Test]
@@ -76,10 +77,12 @@ namespace UserManager.Tests.Controllers
 
             var result = controller.GetUser(1) as OkObjectResult;
             Assert.That(result, Is.Not.Null, "Expected an OkObjectResult, but got null.");
-
-            var returnedUser = result.Value as User;
             Assert.That(result.StatusCode, Is.EqualTo(200));
-            Assert.That(returnedUser, Is.EqualTo(storedUser));
+
+            var returnedUser = result.Value as UserDTO;
+            Assert.That(returnedUser, Is.Not.Null, "Expected a UserDTO, but got null.");
+            Assert.That(returnedUser.Id, Is.EqualTo(storedUser.Id));
+            Assert.That(returnedUser.Username, Is.EqualTo(storedUser.Username));
         }
 
         [Test]
@@ -102,7 +105,7 @@ namespace UserManager.Tests.Controllers
             };
 
             var result = controller.CreateUser(user) as CreatedAtActionResult;
-            mockUserRepository.Received(1).AddUser(user);
+            mockUserRepository.Received(1).AddUser(Arg.Is<User>(u => u.Username == user.Username && u.Password == "hashedPass"));
             Assert.That(result, Is.Not.Null, "Expected a CreatedAtActionResult, but got null.");
             Assert.That(result.StatusCode, Is.EqualTo(201));
             Assert.That(result.ActionName, Is.EqualTo("GetUser"));
