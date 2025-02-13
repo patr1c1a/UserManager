@@ -18,10 +18,11 @@ namespace UserManager.Models
         public string? Email { get; set; }
 
         [Required(ErrorMessage = "The password is required.")]
+        [StringLength(30, MinimumLength = 6, ErrorMessage = "The password must be between {2} and {1} characters.")]
         [SwaggerSchema(Description = "The password of the user (it will be hashed).")]
         public required string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The Role ID is required.")]
         [SwaggerSchema(Description = "The role ID associated with the user.")]
         public required int RoleId { get; set; }
 
