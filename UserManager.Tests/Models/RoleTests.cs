@@ -1,7 +1,6 @@
 using UserManager.Models;
-using System.ComponentModel.DataAnnotations;
 using NSubstitute;
-
+using static UserManager.Tests.Models.ModelValidation;
 
 namespace UserManager.Tests.Models
 {
@@ -44,14 +43,6 @@ namespace UserManager.Tests.Models
 
             Assert.That(validationResults, Has.Count.EqualTo(1), "Validation should fail for missing name.");
             Assert.That(validationResults[0].ErrorMessage, Is.EqualTo("The users list required (it can be empty)."));
-        }
-
-        private static List<ValidationResult> ValidateModel(object model)
-        {
-            var validationResults = new List<ValidationResult>();
-            var validationContext = new ValidationContext(model, null, null);
-            Validator.TryValidateObject(model, validationContext, validationResults, true);
-            return validationResults;
         }
     }
 }
