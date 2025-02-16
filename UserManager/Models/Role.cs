@@ -13,6 +13,7 @@ namespace UserManager.Models
         [SwaggerSchema(Description = "The name of the role. Must be between 3 and 50 characters.")]
         public required string Name { get; set; }
 
+        [Required(ErrorMessage = "The users list required (it can be empty).")]
         [SwaggerSchema(ReadOnly = true, Description = "The list of users associated with this role.")]
         public required ICollection<User> Users { get; set; }
     }
